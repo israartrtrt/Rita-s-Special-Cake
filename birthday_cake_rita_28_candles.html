@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Happy Birthday Rita 🎂</title>
+  <style>
+    :root{
+      --pistachio:#a8d5ba;        /* cake base */
+      --pistachio-deep:#7dbd98;   /* shadows */
+      --pink:#f6c1d1;             /* accents */
+      --cream:#fff3dc;            /* icing */
+      --choco:#6b4f3a;            /* plate shadow */
+      --bg:#0b0f14;               /* dark backdrop to make flames pop */
+      --flame:#ffd56a;
+      --flame-core:#fff6b7;
+      --smoke:#b8c0c7;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; background: radial-gradient(1200px 800px at 50% 20%, #17202b 0%, var(--bg) 40%, #070a0e 100%);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:#fff; overflow:hidden; -webkit-tap-highlight-color: transparent;
+    }
+    .stage{position:relative; width:100%; height:100%; display:flex; align-items:flex-end; justify-content:center;}
+
+    /* Big translucent counter */
+    .counter{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size: min(42vw, 28rem); line-height:1; letter-spacing:-0.03em;
+      color:rgba(255,255,255,0.06); user-select:none; pointer-events:none;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+    }
+
+    /* Header text */
+    .title{
+      position:absolute; top: clamp(12px, 4vh, 40px); left:50%; transform:translateX(-50%);
+      text-align:center; font-weight:900; letter-spacing:0.02em; line-height:1.1;
+      font-size: clamp(24px, 6vw, 48px);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
+    .subtitle{opacity:0.8; font-weight:500; font-size: clamp(12px, 2.8vw, 16px)}
+
+    /* Cake stack */
+    .cake-wrap{position:relative; margin-bottom:12vh;}
+
+    .plate{
+      position:absolute; left:50%; transform:translateX(-50%); bottom:-28px; width:min(90vw, 520px); height:28px; border-radius:1000px;
+      background: radial-gradient(60% 140% at 50% 10%, #f8f8f8 0%, #d8dee6 60%, #c6ced8 100%);
+      box-shadow: 0 24px 40px rgba(0,0,0,0.55), inset 0 2px 2px rgba(255,255,255,0.8);
+    }
+
+    .cake{
+      position:relative; width:min(86vw, 480px); height:min(50vh, 360px); border-radius: 20px 20px 30px 30px / 14px 14px 40px 40px;
+      background: linear-gradient(180deg, var(--pistachio) 0%, var(--pistachio-deep) 100%);
+      box-shadow: inset 0 12px 20px rgba(255,255,255,0.25), inset 0 -20px 40px rgba(0,0,0,0.2), 0 30px 60px rgba(0,0,0,0.45);
+      overflow:visible; border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Subtle texture */
+    .cake::before{
+      content:""; position:absolute; inset:0; background:
+        radial-gradient(12px 12px at 20% 25%, rgba(255,255,255,0.12) 0 30%, transparent 31%),
+        radial-gradient(10px 10px at 70% 45%, rgba(255,255,255,0.1) 0 30%, transparent 31%),
+        radial-gradient(14px 14px at 52% 70%, rgba(0,0,0,0.07) 0 25%, transparent 26%);
+      mix-blend-mode: overlay; opacity:0.5; border-radius:inherit;
+    }
+
+    /* Icing drip */
+    .icing{
+      position:absolute; top:-38px; left:0; right:0; height:82px; border-radius: 16px 16px 0 0;
+      background: linear-gradient(180deg, var(--cream) 0%, #ffe7bd 100%);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.25);
+      mask: radial-gradient(32px 16px at 8% 90%, #000 97%, transparent 100%),
+            radial-gradient(26px 14px at 26% 80%, #000 97%, transparent 100%),
+            radial-gradient(28px 16px at 41% 95%, #000 97%, transparent 100%),
+            radial-gradient(30px 16px at 57% 85%, #000 97%, transparent 100%),
+            radial-gradient(24px 12px at 72% 92%, #000 97%, transparent 100%),
+            radial-gradient(28px 14px at 88% 86%, #000 97%, transparent 100%),
+            linear-gradient(#000, #000);
+      -webkit-mask-composite: destination-out; mask-composite: exclude;
+    }
+
+    /* Ribbon */
+    .ribbon{
+      position:absolute; left:50%; transform:translateX(-50%); bottom:25%; width:92%; height:46px; border-radius:12px;
+      background: linear-gradient(180deg, #ffd8e6 0%, var(--pink) 50%, #f1a7bd 100%);
+      box-shadow: inset 0 2px 6px rgba(255,255,255,0.6), inset 0 -4px 10px rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    /* Candles area */
+    .candles{ position:absolute; top:-10px; left:0; right:0; height:80px; display:flex; align-items:flex-end; justify-content:space-evenly; padding:0 18px;}
+
+    .candle{ position:relative; width:10px; height:56px; border-radius:5px; background: repeating-linear-gradient(180deg, #fff 0 12px, #ffd9e9 12px 24px);
+      box-shadow: inset 0 2px 3px rgba(0,0,0,0.15); transform-origin:bottom center;}
+    .candle .wick{position:absolute; top:-6px; left:50%; width:2px; height:8px; background:#333; transform:translateX(-50%); border-radius:2px}
+
+    .flame{ position:absolute; top:-22px; left:50%; transform:translateX(-50%);
+      width:14px; height:22px; border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+      background: radial-gradient(60% 60% at 50% 45%, var(--flame-core) 0%, var(--flame) 55%, rgba(255,150,0,0.9) 100%);
+      filter: blur(0.2px) drop-shadow(0 0 10px rgba(255,180,80,0.7));
+      animation: flicker 0.12s infinite alternate ease-in-out;
+    }
+    @keyframes flicker{ from{ transform:translateX(-50%) translateY(0) scale(1);} to{ transform:translateX(-50%) translateY(-1px) scale(0.98);} }
+
+    .smoke{ position:absolute; top:-18px; left:50%; transform:translateX(-50%); width:2px; height:2px; border-radius:50%; background:var(--smoke); opacity:0;}
+    .candle.extinguished .flame{ display:none; }
+    .candle.extinguished .smoke{ animation: puff 1.2s ease-out forwards; }
+    @keyframes puff{ 0%{opacity:0; transform:translateX(-50%) translateY(0) scale(0.6);} 20%{opacity:0.9;} 100%{opacity:0; transform:translateX(-50%) translateY(-34px) scale(1.6);} }
+
+    /* Start overlay */
+    .overlay{
+      position:fixed; inset:0; background: linear-gradient(180deg, #0b0f14 0%, rgba(11,15,20,0.96) 100%);
+      display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px; z-index:10; text-align:center;
+      padding: 24px;
+    }
+    .btn{ appearance:none; border:none; padding:14px 20px; border-radius:14px; font-weight:700; font-size:16px; cursor:pointer;
+      background: linear-gradient(180deg, #ffd56a, #ffb043); color:#1a1206; box-shadow: 0 10px 20px rgba(0,0,0,0.35); }
+    .hint{ opacity:0.8; font-size:14px; }
+
+    /* Small utility footer */
+    .footer{ position:fixed; right:10px; bottom:10px; font-size:11px; opacity:0.6; }
+
+    /* Confetti canvas */
+    #confetti{ position:fixed; inset:0; pointer-events:none; }
+
+    /* Mini controls (optional) */
+    .controls{ position:fixed; left:10px; bottom:10px; font-size:12px; background:rgba(255,255,255,0.06); padding:8px 10px; border-radius:10px; backdrop-filter: blur(6px); display:flex; gap:8px; align-items:center; }
+    .controls input[type=range]{ width:120px; }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+
+  <div class="stage" id="stage">
+    <div class="counter" id="counter">28</div>
+    <div class="title">
+      Happy Birthday <span style="color:#ffd6e7">Rita</span>
+      <div class="subtitle">Blow out the candles 🎤🕯️</div>
+    </div>
+
+    <div class="cake-wrap">
+      <div class="plate"></div>
+      <div class="cake" id="cake">
+        <div class="icing"></div>
+        <div class="ribbon"></div>
+        <div class="candles" id="candles"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div style="font-size:22px; font-weight:800;">Give microphone access to blow the candles</div>
+    <div class="hint">Tip: if mic isn't available, tap the cake repeatedly to blow them out.</div>
+    <button class="btn" id="startBtn">Tap to Start</button>
+  </div>
+
+  <div class="controls" id="controls" style="display:none">
+    <label>Mic sensitivity
+      <input type="range" id="sens" min="1" max="100" value="50" />
+    </label>
+  </div>
+
+  <div class="footer">Made with HTML + CSS + JS</div>
+
+<script>
+(function(){
+  const NAME = 'Rita';
+  const CANDLE_COUNT = 28;
+
+  const candlesEl = document.getElementById('candles');
+  const counterEl = document.getElementById('counter');
+  const overlayEl = document.getElementById('overlay');
+  const startBtn = document.getElementById('startBtn');
+  const sensEl = document.getElementById('sens');
+  const controlsEl = document.getElementById('controls');
+  const stageEl = document.getElementById('stage');
+
+  let remaining = CANDLE_COUNT;
+  counterEl.textContent = remaining;
+
+  // Build candles dynamically and distribute evenly
+  const candles = [];
+  for(let i=0;i<CANDLE_COUNT;i++){
+    const c = document.createElement('div'); c.className = 'candle';
+    const wick = document.createElement('div'); wick.className = 'wick';
+    const flame = document.createElement('div'); flame.className = 'flame';
+    const smoke = document.createElement('div'); smoke.className = 'smoke';
+    c.appendChild(wick); c.appendChild(flame); c.appendChild(smoke);
+    candlesEl.appendChild(c);
+    candles.push({el:c, flame, smoke, out:false});
+  }
+
+  // Helper: extinguish next N candles
+  function extinguish(count){
+    let done = 0;
+    for(const c of candles){
+      if(done>=count) break;
+      if(!c.out){ c.out = true; c.el.classList.add('extinguished'); remaining--; done++; }
+    }
+    if(done>0){
+      counterEl.textContent = Math.max(remaining,0);
+      if(remaining<=0){ celebrate(); }
+    }
+  }
+
+  // Tap fallback -> each tap puffs a candle
+  stageEl.addEventListener('click', ()=>{ if(remaining>0) extinguish(1); });
+
+  // Microphone analysis
+  let audioCtx, analyser, dataArray, micStream;
+  let lastExtinguish = 0;
+
+  function startAudio(){
+    return navigator.mediaDevices.getUserMedia({audio:{ echoCancellation:true, noiseSuppression:true }})
+      .then(stream=>{
+        micStream = stream;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioCtx.createMediaStreamSource(stream);
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 2048;
+        dataArray = new Uint8Array(analyser.fftSize);
+        source.connect(analyser);
+        loop();
+        controlsEl.style.display = 'flex';
+      });
+  }
+
+  function getRMS(){
+    analyser.getByteTimeDomainData(dataArray);
+    // Convert 0..255 around 128 center to -1..1 and compute RMS
+    let sum = 0; for(let i=0;i<dataArray.length;i++){ const v = (dataArray[i]-128)/128; sum += v*v; }
+    return Math.sqrt(sum/dataArray.length);
+  }
+
+  function loop(){
+    if(!analyser) return;
+    const now = performance.now();
+    const rms = getRMS();
+    // Sensitivity mapping: higher slider => more sensitive => lower threshold
+    const sens = Number(sensEl.value); // 1..100
+    const baseThreshold = 0.08; // baseline
+    const threshold = baseThreshold * (70 / sens); // sens 70≈base, 100 very easy, 10 very hard
+
+    const cooldown = 240; // ms between extinguishes
+    if(rms > threshold && (now - lastExtinguish) > cooldown){
+      // Stronger blow -> more candles: step every 0.06 above threshold
+      const extra = Math.max(0, rms - threshold);
+      const multi = 1 + Math.min(3, Math.floor(extra / 0.06));
+      extinguish(multi);
+      lastExtinguish = now;
+      // Subtle wobble effect while blowing
+      wobbleCandles();
+    }
+    requestAnimationFrame(loop);
+  }
+
+  function wobbleCandles(){
+    candles.forEach((c,i)=>{
+      if(!c.out){
+        const tilt = (Math.random()*2-1)*4; // -4..4 deg
+        c.el.style.transform = `rotate(${tilt}deg)`;
+        setTimeout(()=>{ c.el.style.transform='rotate(0deg)'; }, 180);
+      }
+    });
+  }
+
+  startBtn.addEventListener('click', async ()=>{
+    try{
+      overlayEl.style.display='none';
+      await startAudio();
+      if(audioCtx.state === 'suspended'){ await audioCtx.resume(); }
+    }catch(err){
+      // If user denies mic, keep tap-to-blow only
+      console.warn('Mic error', err);
+      overlayEl.style.display='none';
+    }
+  });
+
+  // Confetti celebration
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  let w=canvas.width=window.innerWidth, h=canvas.height=window.innerHeight;
+  window.addEventListener('resize', ()=>{ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; });
+
+  const pieces = [];
+  function makeConfetti(){
+    pieces.length = 0;
+    const n = Math.min(220, Math.floor(w/4));
+    for(let i=0;i<n;i++){
+      pieces.push({
+        x: Math.random()*w, y: -10 - Math.random()*h*0.4,
+        size: 4 + Math.random()*6,
+        speedY: 1.2 + Math.random()*3,
+        speedX: -1 + Math.random()*2,
+        rot: Math.random()*Math.PI*2,
+        rotSpeed: -0.2 + Math.random()*0.4,
+        shape: Math.random()<0.5?'rect':'circle'
+      });
+    }
+  }
+  let confettiActive=false;
+  function drawConfetti(){
+    if(!confettiActive) return;
+    ctx.clearRect(0,0,w,h);
+    for(const p of pieces){
+      ctx.save();
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = 0.9;
+      // no fixed colors: use HSL cycling based on position so it's pretty without hardcoding a palette
+      const hue = (p.x / w) * 360;
+      ctx.fillStyle = `hsl(${hue}, 90%, 60%)`;
+      if(p.shape==='rect'){
+        ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
+      } else {
+        ctx.beginPath(); ctx.arc(0,0,p.size/2,0,Math.PI*2); ctx.fill();
+      }
+      ctx.restore();
+
+      p.y += p.speedY; p.x += p.speedX; p.rot += p.rotSpeed;
+      if(p.y>h+20) { p.y = -10; p.x = Math.random()*w; }
+    }
+    requestAnimationFrame(drawConfetti);
+  }
+
+  function celebrate(){
+    confettiActive = true; makeConfetti(); drawConfetti();
+    // A soft glow on the ribbon to hint success
+    const ribbon = document.querySelector('.ribbon');
+    ribbon.animate([
+      { boxShadow: 'inset 0 2px 6px rgba(255,255,255,0.6), inset 0 -4px 10px rgba(0,0,0,0.18), 0 0 0 0 rgba(255,255,255,0)' },
+      { boxShadow: 'inset 0 2px 6px rgba(255,255,255,0.6), inset 0 -4px 10px rgba(0,0,0,0.18), 0 0 30px 12px rgba(255,214,103,0.45)' },
+      { boxShadow: 'inset 0 2px 6px rgba(255,255,255,0.6), inset 0 -4px 10px rgba(0,0,0,0.18), 0 0 0 0 rgba(255,255,255,0)' }
+    ], { duration: 1800, iterations: 1, easing:'ease-out' });
+  }
+
+})();
+</script>
+</body>
+</html>
